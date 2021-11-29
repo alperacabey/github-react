@@ -35,7 +35,7 @@ const List = () => {
 
     useEffect(() => {
         if ((name || range.max || range.min || sort) && order) {
-            clearTimeout(timeout);
+            clearTimeout(timeout)
             timeout = setTimeout(() => {
                 dispatch(searchRepositories({ name, ...range, page, sort, order }))
             }, 500)
@@ -78,7 +78,7 @@ const List = () => {
                 sorting={sorting}
             />
         </>
-    );
+    )
 }
 
-export default List;
+export default List

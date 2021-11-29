@@ -1,8 +1,23 @@
-import { render, screen } from '@testing-library/react'
+import { shallow, findByTestAttr } from "../testUtils"
 import App from './App'
 
-test('renders search text', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Search for an organization/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe("App Container", () => {
+  let wrapper = null;
+  beforeEach(() => {
+    wrapper = shallow(<App />)
+  })
+
+  it('renders without crashing', () => {
+    expect(findByTestAttr(wrapper, "app-container").exists()).toBe(true)
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('renders header correctly', () => {
+    expect(findByTestAttr(wrapper, "header-component").exists()).toBe(true)
+  })
+
+  it('renders container correctly', () => {
+    expect(findByTestAttr(wrapper, "container-component").exists()).toBe(true)
+  })
+
+})

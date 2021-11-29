@@ -4,7 +4,8 @@ const Table = ({
     list = [],
     columns = {},
     loading = false,
-    sort, order,
+    sort,
+    order,
     handlePageClick,
     pageCount,
     sorting

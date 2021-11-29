@@ -4,16 +4,15 @@ import ReactTooltip from "react-tooltip"
 
 const Range = ({
     id = 'range',
-    value,
+    value = { min: 0, max: 0 },
     label = '',
     onChange = () => { },
-    className
+    className = ''
 }) => {
 
     const [showTooltip, setShowTooltip] = useState(false)
 
     const handleOnChange = (min, max) => {
-
         if (min && max && Number(min) >= Number(max)) setShowTooltip(true)
         else {
             setShowTooltip(false)
@@ -22,8 +21,8 @@ const Range = ({
     }
 
     useEffect(() => {
-        ReactTooltip.rebuild();
-    });
+        ReactTooltip.rebuild()
+    })
 
     return (
         <div className={className}>
@@ -31,6 +30,7 @@ const Range = ({
             <div
                 id={`${id}`}
                 data-tip data-for={`${id}Tip`}
+                data-test="range-component"
             >
                 <input
                     id={`${id}Min`}
@@ -42,6 +42,7 @@ const Range = ({
                     min="0"
                     max="999999"
                     className={`border p-2.5 text-md w-20 h-10 mr-5 ${className} ${showTooltip ? 'border-danger active:border-danger' : 'border-primary '}`}
+                    data-test="min-input"
                 >
                 </input>
                 <input
@@ -54,23 +55,25 @@ const Range = ({
                     min="0"
                     max="999999"
                     className={`border p-2.5 text-md w-20 h-10 ${className} ${showTooltip ? 'border-danger' : 'border-primary '}`}
+                    data-test="max-input"
                 >
                 </input>
             </div>
 
-            <ReactTooltip
-                disable={!showTooltip}
-                id={`${id}Tip`}
-                place="bottom"
-                effect="solid"
-                backgroundColor="#555456"
-                arrowColor="transparent"
-                className="bg-gray border-2xl shadow-header"
-                type="error">
-                Conflicting min and max values
-            </ReactTooltip>
+            {showTooltip &&
+                <ReactTooltip
+                    id={`${id}Tip`}
+                    place="bottom"
+                    effect="solid"
+                    backgroundColor="#555456"
+                    arrowColor="transparent"
+                    className="bg-gray border-2xl shadow-header"
+                    type="error"
+                    data-test="range-tooltip">
+                    Conflicting min and max values
+                </ReactTooltip>}
         </div>
-    );
+    )
 }
 
-export default Range;
+export default Range

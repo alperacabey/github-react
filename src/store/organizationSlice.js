@@ -38,7 +38,7 @@ export const getIssues = createAsyncThunk(
   }
 )
 
-const initialState = () => ({
+export const initialState = () => ({
   list: [],
   selected: '',
   serviceStatus: 'idle',//'idle' | 'loading' | 'succeeded' | 'failed'
@@ -74,6 +74,9 @@ export const organizationSlice = createSlice({
         state.loadingStack['searchOrganizations'] = false;
         // state.list = action.payload.items.map(item => ({ id: item.login, name: item.login.charAt(0).toUpperCase() + item.login.slice(1).toLocaleLowerCase() }))
       })
+      .addCase(searchOrganizations.rejected, (state) => {
+        state.loadingStack['searchOrganizations'] = false;
+      })
       //searchRepositoriesAsync
       .addCase(searchRepositoriesAsync.pending, (state) => {
         state.loadingStack['searchRepositories'] = true;
@@ -85,6 +88,9 @@ export const organizationSlice = createSlice({
         state.repositories = action.payload.items;
         state.totalCount = action.payload.total_count;
       })
+      // .addCase(searchRepositoriesAsync.rejected, (state) => {
+      //   state.loadingStack['searchRepositories'] = false;
+      // })
       //getIssues
       .addCase(getIssues.pending, (state) => {
         state.loadingStack['getIssues'] = true;
@@ -93,7 +99,9 @@ export const organizationSlice = createSlice({
       .addCase(getIssues.fulfilled, (state, action) => {
         state.serviceStatus = 'idle'
         state.loadingStack['getIssues'] = false;
-        // state.repositories = action.payload.items;
+      })
+      .addCase(searchRepositoriesAsync.rejected, (state) => {
+        state.loadingStack['getIssues'] = false;
       })
   },
 })
@@ -110,7 +118,7 @@ export const searchRepositories = (params) => (dispatch, getState) => {
 };
 
 // Selectors
-export const selectedOrganization = (store) => store.organization.selected;
+export const selectedOrganization = (store) => store.organization?.selected;
 export const organizationList = (store) => store.organization.list;
 export const repositoryList = (store) => store.organization.repositories
 export const serviceStatus = (store) => store.organization.serviceStatus

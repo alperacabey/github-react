@@ -3,17 +3,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import { AutoComplete } from "../common"
 import { organizationList, selectOrganization, searchOrganizations, loadingStack, resetOrganization } from "../../store/organizationSlice"
 
-let timeout = null;
+let timeout = null
 
 const Header = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [searchText, setSeacrhText] = useState('octokit')
     const organizations = useSelector(organizationList)
     const loading = useSelector(loadingStack)
 
     useEffect(() => {
         if (searchText) {
-            clearTimeout(timeout);
+            clearTimeout(timeout)
             timeout = setTimeout(() => {
                 dispatch(searchOrganizations(searchText))
             }, 500)
@@ -24,14 +24,15 @@ const Header = () => {
     const onSelectItem = (val) => {
         setSeacrhText(val)
         dispatch(resetOrganization())
-        setTimeout(() => { 
-        dispatch(selectOrganization(val))
-         }, 0)
+        setTimeout(() => {
+            dispatch(selectOrganization(val))
+        }, 0)
     }
 
     return (
         <header className="bg-gray-dark p-2.5 shadow-header absolute w-full sticky top-0" >
             <AutoComplete
+                id="search-organization"
                 data={organizations}
                 iconColor="Turquoise"
                 className="h-10 w-80 p-2.5"
@@ -42,7 +43,7 @@ const Header = () => {
                 loading={loading['searchOrganizations']}
             />
         </header>
-    );
+    )
 }
 
-export default Header;
+export default Header

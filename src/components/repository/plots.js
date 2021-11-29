@@ -24,7 +24,7 @@ const plotOptions = [
 
 const Plots = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [plotType, setPlotType] = useState(plotOptions[0])
     const repositories = useSelector(repositoryList)
     const [plotList, setPlotList] = useState([])
@@ -47,7 +47,7 @@ const Plots = () => {
                         const open_issues = response[index * 2].data.total_count
                         const closed_issues = response[index * 2 + 1].data.total_count
                         const percentage = (open_issues * 100) / (open_issues + closed_issues)
-                        let color = null;
+                        let color = null
 
                         if (open_issues < 100) color = '#111111'
                         else if (percentage < 10) color = '#00CC2D'

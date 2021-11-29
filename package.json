@@ -6,6 +6,7 @@
     "@craco/craco": "^6.4.0",
     "@fontsource/roboto": "^4.5.1",
     "@octokit/auth-token": "^2.5.0",
+    "@octokit/request-error": "^2.1.0",
     "@octokit/rest": "^18.12.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",
@@ -22,9 +23,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-dotenv && craco start",
-    "build": "react-dotenv && craco build",
-    "test": "react-dotenv && craco test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --verbose",
     "eject": "react-scripts eject",
     "docker:build": "docker build -t alperacabey/github-react:latest .",
     "docker:run": "docker run -it -p 3000:3000 github-react"
@@ -48,13 +49,15 @@
     ]
   },
   "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "autoprefixer": "^9.8.8",
+    "enzyme": "^3.11.0",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   },
   "react-dotenv": {
     "whitelist": [
-      "ACCESS_TOKEN"
+      "REACT_APP_ACCESS_TOKEN"
     ]
   }
 }

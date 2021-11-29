@@ -9,17 +9,18 @@ const TextField = ({
     loading = false,
     onChange = () => { },
     onKeyPress = () => { },
-    className,
-    onClick
+    onClick = () => { },
+    className = '',
 }) => {
     return (
         <div>
-            {label ? <p className={`mb-1 font-semibold ${className}`}>{label}</p> : <></>}
+            {label && <p className={`mb-1 font-semibold ${className}`}>{label}</p>}
             <input
                 id={id}
+                name={id}
                 autoComplete="off"
                 value={value}
-                onChange={(e)=>onChange(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
                 type={"text"}
                 className={`border border-solid border-2 border-primary p-2.5 text-md w-80 tablet:w-50 h-10 ${className}`}
                 placeholder={placeholder}
@@ -27,26 +28,30 @@ const TextField = ({
                 onKeyDown={onKeyPress}
                 onKeyPress={onKeyPress}
                 onClick={onClick}
+                data-test="textfield-input"
             >
             </input>
-            <ReactTooltip
-                disable={!showTooltip}
-                id={`${id}Tip`}
-                place="bottom"
-                effect="solid"
-                backgroundColor="#555456"
-                arrowColor="transparent"
-                className="bg-gray border-2xl shadow-header">
-                The result you were looking for could not be found
-            </ReactTooltip>
             {
-                loading ?
-                    <div className="absolute w-auto inset-y-0 top-2" style={{ right: '40px' }}>
-                        <div className="loader" />
-                    </div> : <></>
+                showTooltip &&
+                <ReactTooltip
+                    id={`${id}Tip`}
+                    place="bottom"
+                    effect="solid"
+                    backgroundColor="#555456"
+                    arrowColor="transparent"
+                    className="bg-gray border-2xl shadow-header"
+                    data-test="textfield-tooltip">
+                    The result you were looking for could not be found
+                </ReactTooltip>
+            }
+            {
+                loading &&
+                <div className="absolute w-auto inset-y-0 top-2" style={{ right: '40px' }}>
+                    <div className="loader" data-test="textfield-loader" />
+                </div>
             }
         </div>
-    );
+    )
 }
 
-export default TextField;
+export default TextField

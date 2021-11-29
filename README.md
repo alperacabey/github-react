@@ -1,8 +1,8 @@
 # Before Start
 
 Generate personel access token from [github tokens page](https://github.com/settings/tokens).\
-Rename .env.dev to .env.\
-Fill the ACCESS_TOKEN field in .env file.
+Rename .env.development to .env.\
+Fill the REACT_APP_ACCESS_TOKEN field in .env file.
 
 ## Available Scripts
 
@@ -31,20 +31,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn docker:build --build-arg ACCESS_TOKEN={ACCESS_TOKEN} .`
+### `yarn docker:build --build-arg REACT_APP_ACCESS_TOKEN={REACT_APP_ACCESS_TOKEN} .`
 
 Builds an image upon which your container will be built.\
 
-### `yarn docker:run --build-arg ACCESS_TOKEN={ACCESS_TOKEN} .`
+### `yarn docker:run --build-arg REACT_APP_ACCESS_TOKEN={REACT_APP_ACCESS_TOKEN} .`
 
-Builds an image upon which your container will be built.\
-
-### `yarn eject` or `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Runs the app on docker container.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

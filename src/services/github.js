@@ -1,22 +1,26 @@
-import { Octokit } from "@octokit/rest";
-import env from "react-dotenv";
+import { Octokit } from "@octokit/rest"
+const { RequestError } = require("@octokit/request-error")
 
 const octokit = new Octokit({
-    auth: env.ACCESS_TOKEN
-});
+    auth: process.env.REACT_APP_ACCESS_TOKEN
+})
 
 const githubAPI = {
-    searchOrganizations(input) {
-        return input && octokit.request('GET /search/users', {
-            q: `type:org ${input}`,
-            per_page: 10,
-            page: 1,
-        })
+    async searchOrganizations(input) {
+        try {
+            return input && octokit.request('GET /search/users', {
+                q: `type:org ${input}`,
+                per_page: 10,
+                page: 1,
+            })
+        } catch (e) {
+            new RequestError(e)
+        }
     },
 
     // order = "asc" || "desc"
     // sort = 'stars' || 'forks' || 'help-wanted-issues'
-    searchRepositories({
+    async searchRepositories({
         org = "",
         name = "",
         min = 0,
@@ -30,22 +34,30 @@ const githubAPI = {
         else if (min) stars = ` stars:>=${min}`
         else if (max) stars = ` stars:<=${max}`
         if (sort === 'stargazers_count') sort = 'stars'
-        return octokit.request('GET /search/repositories', {
-            q: `org:${org} ${name}${stars ? stars : ''}`,
-            sort,
-            order,
-            page,
-            per_page: 10,
-        })
+
+        try {
+            return await octokit.request('GET /search/repositories', {
+                q: `org:${org} ${name}${stars ? stars : ''}`,
+                sort,
+                order,
+                page,
+                per_page: 10,
+            })
+        } catch (e) {
+            new RequestError(e)
+        }
     },
 
-    getIssues({ org, repo, state }) {
-
-        return octokit.request('GET /search/issues', {
-            q: `repo:${repo} state:${state}`,
-            per_page: 100,
-            page: 1,
-        })
+    async getIssues({ org, repo, state }) {
+        try {
+            return await octokit.request('GET /search/issues', {
+                q: `repo:${repo} state:${state}`,
+                per_page: 100,
+                page: 1,
+            })
+        } catch (e) {
+            new RequestError(e)
+        }
     }
 }
 

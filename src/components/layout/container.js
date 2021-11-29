@@ -4,10 +4,11 @@ import List from '../repository/list'
 import Plots from '../repository/plots'
 
 const Container = () => {
-    const organization = useSelector(selectedOrganization);
+    const organization = useSelector(selectedOrganization)
 
     return (
-        <div className="bg-gray h-full p-10" >
+        <div className="bg-gray h-full p-10"
+            data-test="container-component" >
             {
                 organization ?
                     <>
@@ -15,10 +16,10 @@ const Container = () => {
 
                         <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
                             <div className="row-span-1 laptop:pr-5">
-                                <List />
+                                <List data-test="list-component" />
                             </div>
                             <div className="row-span-1 laptop:pr-5">
-                                <Plots />
+                                <Plots data-test="plots-component" />
                             </div>
                         </div>
                     </>
@@ -28,7 +29,7 @@ const Container = () => {
                     </div>
             }
         </div>
-    );
+    )
 }
 
-export default Container;
+export default Container
