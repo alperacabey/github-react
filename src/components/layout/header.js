@@ -7,7 +7,7 @@ let timeout = null
 
 const Header = () => {
     const dispatch = useDispatch()
-    const [searchText, setSeacrhText] = useState('octokit')
+    const [searchText, setSeacrhText] = useState('')
     const organizations = useSelector(organizationList)
     const loading = useSelector(loadingStack)
 
