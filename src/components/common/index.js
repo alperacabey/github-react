@@ -1,6 +1,0 @@
-export { default as TextField } from './textField'
-export { default as Range } from './range'
-export { default as AutoComplete } from './autoComplete'
-export { default as Table } from './table'
-export { default as DropDown } from './dropDown'
-export { default as Plot } from './plot'
