@@ -1,20 +1,33 @@
+import { toast } from 'react-toastify';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import github from '../services/github'
+const { RequestError } = require("@octokit/request-error")
 
 export const searchOrganizations = createAsyncThunk(
   'organization/fetchList',
   async (input) => {
-    const response = await github.searchOrganizations(input)
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    try {
+      const response = await github.searchOrganizations(input)
+      // The value we return becomes the `fulfilled` action payload
+      console.log(response)
+      return response.data;
+    } catch (e) {
+      const message = new Error(e).message
+      toast.error(message)
+    }
   }
 )
 
 const searchRepositoriesAsync = createAsyncThunk(
   'repostory/fetchList',
   async (params) => {
-    const response = await github.searchRepositories(params)
-    return response.data;
+    try {
+      const response = await github.searchRepositories(params)
+      return response.data;
+    } catch (e) {
+      const message = new Error(e).message
+      toast.error(message)
+    }
   }
 )
 
@@ -67,10 +80,11 @@ export const organizationSlice = createSlice({
       //searchOrganizations
       .addCase(searchOrganizations.pending, (state) => {
         state.loadingStack['searchOrganizations'] = true;
+        console.log('pending')
       })
       .addCase(searchOrganizations.fulfilled, (state, action) => {
         state.serviceStatus = 'idle'
-        state.list = action.payload.items.map(item => ({ id: item.login, name: item.login }))
+        if (action.payload) state.list = action.payload.items.map(item => ({ id: item.login, name: item.login }))
         state.loadingStack['searchOrganizations'] = false;
         // state.list = action.payload.items.map(item => ({ id: item.login, name: item.login.charAt(0).toUpperCase() + item.login.slice(1).toLocaleLowerCase() }))
       })
